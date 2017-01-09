@@ -1,0 +1,6 @@
+<apex:page standardStylesheets="false" showHeader="false" showChat="false" sidebar="false" controller="PromisesController" docType="html-5.0" applyBodyTag="false">
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="{!URLFOR($Resource.promises, 'js/app.js')}"></script>
+</body>
+</apex:page>
