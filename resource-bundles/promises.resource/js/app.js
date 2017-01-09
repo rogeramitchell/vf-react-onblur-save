@@ -88,7 +88,7 @@
 
 			_this.state = {
 				Account: {},
-				Errors: [],
+				Errors: {},
 				DisableInputs: false
 			};
 			_this.handleBlur = _this.handleBlur.bind(_this);
@@ -113,7 +113,7 @@
 			key: 'discardChanges',
 			value: function discardChanges() {
 				this.setState({
-					Errors: []
+					Errors: {}
 				});
 				(0, _DataHandler.getAccount)(this, this.state.Account.Id);
 			}
@@ -126,8 +126,6 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
-
 				return _react2.default.createElement(
 					'div',
 					{ className: 'App' },
@@ -136,9 +134,7 @@
 						null,
 						'Errors'
 					),
-					this.state.Errors.length > 0 ? this.state.Errors.map(function (item) {
-						return _react2.default.createElement(_ErrorMessage2.default, { key: item, type: item.type, message: item.message, discardChanges: _this2.discardChanges });
-					}) : null,
+					'type' in this.state.Errors ? _react2.default.createElement(_ErrorMessage2.default, { key: 'error', type: this.state.Errors.type, message: this.state.Errors.message, discardChanges: this.discardChanges }) : null,
 					_react2.default.createElement(
 						'h4',
 						null,
@@ -21978,11 +21974,8 @@
 				error.type = event.type;
 				error.message = event.message;
 
-				var existingErrors = context.state.Errors;
-				existingErrors.push(error);
-
 				context.setState({
-					Errors: existingErrors,
+					Errors: error,
 					DisableInputs: true
 				});
 			}
@@ -21993,18 +21986,15 @@
 		Visualforce.remoting.Manager.invokeAction('PromisesController.saveAccount', context.state.Account, function (result, event) {
 			if (event.statusCode == 200) {
 				context.setState({
-					Errors: []
+					Errors: {}
 				});
 			} else {
 				var error = {};
 				error.type = event.type;
 				error.message = event.message;
 
-				var existingErrors = context.state.Errors;
-				existingErrors.push(error);
-
 				context.setState({
-					Errors: existingErrors,
+					Errors: error,
 					DisableInputs: true
 				});
 			}

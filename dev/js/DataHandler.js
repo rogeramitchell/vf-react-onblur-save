@@ -13,11 +13,8 @@ export function getAccount(context, accountId) {
 				error.type = event.type;
 				error.message = event.message;
 
-				let existingErrors = context.state.Errors;
-				existingErrors.push(error);
-
 				context.setState({
-					Errors: existingErrors,
+					Errors: error,
 					DisableInputs: true
 				})
 			}
@@ -31,18 +28,15 @@ export function saveAccount(context) {
 		function(result, event) {
 			if(event.statusCode == 200) {
 				context.setState({
-					Errors: []
+					Errors: {}
 				})
 			} else {
 				let error = {};
 				error.type = event.type;
 				error.message = event.message;
 
-				let existingErrors = context.state.Errors;
-				existingErrors.push(error);
-
 				context.setState({
-					Errors: existingErrors,
+					Errors: error,
 					DisableInputs: true
 				})
 			}

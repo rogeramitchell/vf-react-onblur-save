@@ -11,7 +11,7 @@ class App extends React.Component {
 		super();
 		this.state = {
 			Account: {},
-			Errors: [],
+			Errors: {},
 			DisableInputs: false
 		}
 		this.handleBlur = this.handleBlur.bind(this);
@@ -31,7 +31,7 @@ class App extends React.Component {
 
 	discardChanges() {
 		this.setState({
-			Errors: []
+			Errors: {}
 		})
 		getAccount(this, this.state.Account.Id);
 	}
@@ -46,10 +46,9 @@ class App extends React.Component {
 			<div className="App">
 				<h4>Errors</h4>
 				{
-					this.state.Errors.length > 0 ? 
-					this.state.Errors.map(item => 
-						<ErrorMessage key={item} type={item.type} message={item.message} discardChanges={this.discardChanges} />
-					) : null
+					'type' in this.state.Errors ?  
+						<ErrorMessage key="error" type={this.state.Errors.type} message={this.state.Errors.message} discardChanges={this.discardChanges} />
+					 : null
 				}
 				<h4>Account Details</h4>
 				{
