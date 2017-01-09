@@ -58,6 +58,10 @@
 
 	__webpack_require__(178);
 
+	var _Helpers = __webpack_require__(182);
+
+	var _DataHandler = __webpack_require__(183);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72,15 +76,32 @@
 		function App() {
 			_classCallCheck(this, App);
 
-			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+			_this.state = {
+				Account: {},
+				Errors: []
+			};
+			return _this;
 		}
 
 		_createClass(App, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var accountId = (0, _Helpers.getUrlParameters)()['id'];
+				(0, _DataHandler.getAccount)(this, 'accountId');
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					{ className: 'App' },
+					_react2.default.createElement(
+						'h4',
+						null,
+						'Errors'
+					),
 					_react2.default.createElement(
 						'p',
 						null,
@@ -21869,6 +21890,63 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	   value: true
+	});
+	exports.getUrlParameters = getUrlParameters;
+	function getUrlParameters() {
+	   var match,
+	       pl = /\+/g,
+	       // Regex for replacing addition symbol with a space
+	   search = /([^&=]+)=?([^&]*)/g,
+	       decode = function decode(s) {
+	      return decodeURIComponent(s.replace(pl, " "));
+	   },
+	       query = window.location.search.substring(1);
+
+	   var urlParams = {};
+	   while (match = search.exec(query)) {
+	      urlParams[decode(match[1])] = decode(match[2]);
+	   }return urlParams;
+	}
+
+/***/ },
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.getAccount = getAccount;
+	function getAccount(context, accountId) {
+		Visualforce.remoting.Manager.invokeAction('PromisesController.getAccount', accountId, function (result, event) {
+			if (event.statusCode == 200) {
+				context.setState({
+					Account: result
+				});
+			} else {
+				var error = {};
+				error.type = event.type;
+				error.message = event.message;
+
+				var existingErrors = context.state.Errors;
+				existingErrors.push(error);
+
+				context.setState({
+					Errors: existingErrors
+				});
+			}
+		});
+	}
 
 /***/ }
 /******/ ]);
