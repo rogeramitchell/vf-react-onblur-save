@@ -5,4 +5,12 @@ public class PromisesController
 	{
 		return [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry FROM Account WHERE Id = :accountId];
 	}
+
+	@RemoteAction
+	public static Account saveAccount(Account account)
+	{
+		update account;
+
+		return getAccount(account.Id);
+	}
 }

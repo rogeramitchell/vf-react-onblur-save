@@ -88,10 +88,12 @@
 
 			_this.state = {
 				Account: {},
-				Errors: []
+				Errors: [],
+				DisableInputs: false
 			};
 			_this.handleBlur = _this.handleBlur.bind(_this);
 			_this.handleChange = _this.handleChange.bind(_this);
+			_this.discardChanges = _this.discardChanges.bind(_this);
 			return _this;
 		}
 
@@ -105,7 +107,15 @@
 		}, {
 			key: 'handleBlur',
 			value: function handleBlur() {
-				console.log(this.state.Account);
+				(0, _DataHandler.saveAccount)(this);
+			}
+		}, {
+			key: 'discardChanges',
+			value: function discardChanges() {
+				this.setState({
+					Errors: []
+				});
+				(0, _DataHandler.getAccount)(this, this.state.Account.Id);
 			}
 		}, {
 			key: 'componentWillMount',
@@ -116,6 +126,8 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+
 				return _react2.default.createElement(
 					'div',
 					{ className: 'App' },
@@ -125,14 +137,14 @@
 						'Errors'
 					),
 					this.state.Errors.length > 0 ? this.state.Errors.map(function (item) {
-						return _react2.default.createElement(_ErrorMessage2.default, { key: item, type: item.type, message: item.message });
+						return _react2.default.createElement(_ErrorMessage2.default, { key: item, type: item.type, message: item.message, discardChanges: _this2.discardChanges });
 					}) : null,
 					_react2.default.createElement(
 						'h4',
 						null,
 						'Account Details'
 					),
-					'Id' in this.state.Account ? _react2.default.createElement(_AccountForm2.default, { Account: this.state.Account, handleChange: this.handleChange, handleBlur: this.handleBlur }) : null
+					'Id' in this.state.Account ? _react2.default.createElement(_AccountForm2.default, { Account: this.state.Account, DisableInputs: this.state.DisableInputs, handleChange: this.handleChange, handleBlur: this.handleBlur }) : null
 				);
 			}
 		}]);
@@ -21953,11 +21965,13 @@
 		value: true
 	});
 	exports.getAccount = getAccount;
+	exports.saveAccount = saveAccount;
 	function getAccount(context, accountId) {
 		Visualforce.remoting.Manager.invokeAction('PromisesController.getAccount', accountId, function (result, event) {
 			if (event.statusCode == 200) {
 				context.setState({
-					Account: result
+					Account: result,
+					DisableInputs: false
 				});
 			} else {
 				var error = {};
@@ -21968,7 +21982,30 @@
 				existingErrors.push(error);
 
 				context.setState({
-					Errors: existingErrors
+					Errors: existingErrors,
+					DisableInputs: true
+				});
+			}
+		});
+	}
+
+	function saveAccount(context) {
+		Visualforce.remoting.Manager.invokeAction('PromisesController.saveAccount', context.state.Account, function (result, event) {
+			if (event.statusCode == 200) {
+				context.setState({
+					Errors: []
+				});
+			} else {
+				var error = {};
+				error.type = event.type;
+				error.message = event.message;
+
+				var existingErrors = context.state.Errors;
+				existingErrors.push(error);
+
+				context.setState({
+					Errors: existingErrors,
+					DisableInputs: true
 				});
 			}
 		});
@@ -22013,6 +22050,11 @@
 				return _react2.default.createElement(
 					"div",
 					{ className: "error-message" },
+					_react2.default.createElement(
+						"button",
+						{ onClick: this.props.discardChanges },
+						"Get Account from Server"
+					),
 					_react2.default.createElement(
 						"strong",
 						null,
@@ -22097,7 +22139,7 @@
 							{ htmlFor: "Name" },
 							"Name"
 						),
-						_react2.default.createElement("input", { id: "Name", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+						_react2.default.createElement("input", { id: "Name", disabled: this.props.DisableInputs, type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
 								return _this2.handleChange(event);
 							}, value: this.props.Account.Name }),
 						_react2.default.createElement("br", null),
@@ -22106,7 +22148,7 @@
 							{ htmlFor: "BillingStreet" },
 							"Street"
 						),
-						_react2.default.createElement("input", { id: "BillingStreet", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+						_react2.default.createElement("input", { id: "BillingStreet", disabled: this.props.DisableInputs, type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
 								return _this2.handleChange(event);
 							}, value: this.props.Account.BillingStreet }),
 						_react2.default.createElement("br", null),
@@ -22115,7 +22157,7 @@
 							{ htmlFor: "BillingCity" },
 							"City"
 						),
-						_react2.default.createElement("input", { id: "BillingCity", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+						_react2.default.createElement("input", { id: "BillingCity", disabled: this.props.DisableInputs, type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
 								return _this2.handleChange(event);
 							}, value: this.props.Account.BillingCity }),
 						_react2.default.createElement("br", null),
@@ -22124,7 +22166,7 @@
 							{ htmlFor: "BillingState" },
 							"State"
 						),
-						_react2.default.createElement("input", { id: "BillingState", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+						_react2.default.createElement("input", { id: "BillingState", disabled: this.props.DisableInputs, type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
 								return _this2.handleChange(event);
 							}, value: this.props.Account.BillingState }),
 						_react2.default.createElement("br", null),
@@ -22133,7 +22175,7 @@
 							{ htmlFor: "BillingPostalCode" },
 							"Postal Code"
 						),
-						_react2.default.createElement("input", { id: "BillingPostalCode", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+						_react2.default.createElement("input", { id: "BillingPostalCode", disabled: this.props.DisableInputs, type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
 								return _this2.handleChange(event);
 							}, value: this.props.Account.BillingPostalCode }),
 						_react2.default.createElement("br", null),
@@ -22142,7 +22184,7 @@
 							{ htmlFor: "BillingCountry" },
 							"Country"
 						),
-						_react2.default.createElement("input", { id: "BillingCountry", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+						_react2.default.createElement("input", { id: "BillingCountry", disabled: this.props.DisableInputs, type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
 								return _this2.handleChange(event);
 							}, value: this.props.Account.BillingCountry }),
 						_react2.default.createElement("br", null)

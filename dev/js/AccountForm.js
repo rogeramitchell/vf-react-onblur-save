@@ -22,27 +22,27 @@ class AccountForm extends React.Component {
 			<div>
 				<form>
 					<label htmlFor="Name">Name</label>
-					<input id="Name" type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.Name}/>
+					<input id="Name" disabled={this.props.DisableInputs} type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.Name}/>
 					<br />
 
 					<label htmlFor="BillingStreet">Street</label>
-					<input id="BillingStreet" type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingStreet}/>
+					<input id="BillingStreet" disabled={this.props.DisableInputs} type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingStreet}/>
 					<br />
 
 					<label htmlFor="BillingCity">City</label>
-					<input id="BillingCity" type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingCity}/>
+					<input id="BillingCity" disabled={this.props.DisableInputs} type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingCity}/>
 					<br />
 
 					<label htmlFor="BillingState">State</label>
-					<input id="BillingState" type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingState}/>
+					<input id="BillingState" disabled={this.props.DisableInputs} type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingState}/>
 					<br />
 
 					<label htmlFor="BillingPostalCode">Postal Code</label>
-					<input id="BillingPostalCode" type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingPostalCode}/>
+					<input id="BillingPostalCode" disabled={this.props.DisableInputs} type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingPostalCode}/>
 					<br />
 
 					<label htmlFor="BillingCountry">Country</label>
-					<input id="BillingCountry" type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingCountry}/>
+					<input id="BillingCountry" disabled={this.props.DisableInputs} type="text" onBlur={this.handleBlur} onChange={event => this.handleChange(event)} value={this.props.Account.BillingCountry}/>
 					<br />
 				</form>
 			</div>
