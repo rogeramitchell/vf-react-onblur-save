@@ -4,3 +4,13 @@ This is a simple page and React app that lets a user bounce around a form, and w
 
 ## Demo GIF
 ![demo gif](demo.gif)
+
+## Package Installatio
+If you're interested in playing around with this page, it would be best to fork this repo and start working with the files in `/dev/js/`. You can run the following commands when in the repo's root folder to get started.
+
+```
+npm install
+webpack --watch
+```
+
+Then as you make changes to your files in `/dev/`, you'll see them compiled into `promises.resource/js/app.js`, and can use MavensMate to deploy the resource bundle.
