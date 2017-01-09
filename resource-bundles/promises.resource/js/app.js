@@ -90,10 +90,24 @@
 				Account: {},
 				Errors: []
 			};
+			_this.handleBlur = _this.handleBlur.bind(_this);
+			_this.handleChange = _this.handleChange.bind(_this);
 			return _this;
 		}
 
 		_createClass(App, [{
+			key: 'handleChange',
+			value: function handleChange(account) {
+				this.setState({
+					Account: account
+				});
+			}
+		}, {
+			key: 'handleBlur',
+			value: function handleBlur() {
+				console.log(this.state.Account);
+			}
+		}, {
 			key: 'componentWillMount',
 			value: function componentWillMount() {
 				var accountId = (0, _Helpers.getUrlParameters)()['id'];
@@ -118,7 +132,7 @@
 						null,
 						'Account Details'
 					),
-					'Id' in this.state.Account ? _react2.default.createElement(_AccountForm2.default, { Account: this.state.Account }) : null
+					'Id' in this.state.Account ? _react2.default.createElement(_AccountForm2.default, { Account: this.state.Account, handleChange: this.handleChange, handleBlur: this.handleBlur }) : null
 				);
 			}
 		}]);
@@ -22048,12 +22062,30 @@
 		function AccountForm() {
 			_classCallCheck(this, AccountForm);
 
-			return _possibleConstructorReturn(this, (AccountForm.__proto__ || Object.getPrototypeOf(AccountForm)).call(this));
+			var _this = _possibleConstructorReturn(this, (AccountForm.__proto__ || Object.getPrototypeOf(AccountForm)).call(this));
+
+			_this.handleChange = _this.handleChange.bind(_this);
+			_this.handleBlur = _this.handleBlur.bind(_this);
+			return _this;
 		}
 
 		_createClass(AccountForm, [{
+			key: "handleChange",
+			value: function handleChange(event) {
+				var account = this.props.Account;
+				account[event.target.id] = event.target.value;
+				this.props.handleChange(account);
+			}
+		}, {
+			key: "handleBlur",
+			value: function handleBlur() {
+				this.props.handleBlur();
+			}
+		}, {
 			key: "render",
 			value: function render() {
+				var _this2 = this;
+
 				return _react2.default.createElement(
 					"div",
 					null,
@@ -22065,42 +22097,54 @@
 							{ htmlFor: "Name" },
 							"Name"
 						),
-						_react2.default.createElement("input", { id: "Name", type: "text", value: this.props.Account.Name }),
+						_react2.default.createElement("input", { id: "Name", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+								return _this2.handleChange(event);
+							}, value: this.props.Account.Name }),
 						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"label",
 							{ htmlFor: "BillingStreet" },
 							"Street"
 						),
-						_react2.default.createElement("input", { id: "BillingStreet", type: "text", value: this.props.Account.BillingStreet }),
+						_react2.default.createElement("input", { id: "BillingStreet", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+								return _this2.handleChange(event);
+							}, value: this.props.Account.BillingStreet }),
 						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"label",
 							{ htmlFor: "BillingCity" },
 							"City"
 						),
-						_react2.default.createElement("input", { id: "BillingCity", type: "text", value: this.props.Account.BillingCity }),
+						_react2.default.createElement("input", { id: "BillingCity", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+								return _this2.handleChange(event);
+							}, value: this.props.Account.BillingCity }),
 						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"label",
 							{ htmlFor: "BillingState" },
 							"State"
 						),
-						_react2.default.createElement("input", { id: "BillingState", type: "text", value: this.props.Account.BillingState }),
+						_react2.default.createElement("input", { id: "BillingState", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+								return _this2.handleChange(event);
+							}, value: this.props.Account.BillingState }),
 						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"label",
 							{ htmlFor: "BillingPostalCode" },
 							"Postal Code"
 						),
-						_react2.default.createElement("input", { id: "BillingPostalCode", type: "text", value: this.props.Account.BillingPostalCode }),
+						_react2.default.createElement("input", { id: "BillingPostalCode", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+								return _this2.handleChange(event);
+							}, value: this.props.Account.BillingPostalCode }),
 						_react2.default.createElement("br", null),
 						_react2.default.createElement(
 							"label",
 							{ htmlFor: "BillingCountry" },
 							"Country"
 						),
-						_react2.default.createElement("input", { id: "BillingCountry", type: "text", value: this.props.Account.BillingCountry }),
+						_react2.default.createElement("input", { id: "BillingCountry", type: "text", onBlur: this.handleBlur, onChange: function onChange(event) {
+								return _this2.handleChange(event);
+							}, value: this.props.Account.BillingCountry }),
 						_react2.default.createElement("br", null)
 					)
 				);

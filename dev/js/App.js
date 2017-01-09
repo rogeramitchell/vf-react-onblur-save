@@ -13,6 +13,18 @@ class App extends React.Component {
 			Account: {},
 			Errors: []
 		}
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(account) {
+		this.setState({
+			Account: account
+		});
+	}
+
+	handleBlur() {
+		console.log(this.state.Account);
 	}
 
 	componentWillMount() {
@@ -33,7 +45,7 @@ class App extends React.Component {
 				<h4>Account Details</h4>
 				{
 					'Id' in this.state.Account ? 
-					<AccountForm Account={this.state.Account} /> : 
+					<AccountForm Account={this.state.Account} handleChange={this.handleChange} handleBlur={this.handleBlur} /> : 
 					null
 				}
 			</div>
