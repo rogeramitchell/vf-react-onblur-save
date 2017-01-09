@@ -4,6 +4,7 @@ import '../css/App.css';
 import { getUrlParameters } from './Helpers';
 import { getAccount } from './DataHandler';
 import ErrorMessage from './ErrorMessage';
+import AccountForm from './AccountForm';
 
 class App extends React.Component {
 	constructor() {
@@ -16,7 +17,7 @@ class App extends React.Component {
 
 	componentWillMount() {
 		const accountId = getUrlParameters()['id'];
-		getAccount(this, 'accountId');
+		getAccount(this, accountId);
 	}
 
 	render() {
@@ -30,6 +31,11 @@ class App extends React.Component {
 					) : null
 				}
 				<h4>Account Details</h4>
+				{
+					'Id' in this.state.Account ? 
+					<AccountForm Account={this.state.Account} /> : 
+					null
+				}
 			</div>
 		);
 	}

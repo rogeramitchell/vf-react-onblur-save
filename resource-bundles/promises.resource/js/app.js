@@ -66,6 +66,10 @@
 
 	var _ErrorMessage2 = _interopRequireDefault(_ErrorMessage);
 
+	var _AccountForm = __webpack_require__(185);
+
+	var _AccountForm2 = _interopRequireDefault(_AccountForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -93,7 +97,7 @@
 			key: 'componentWillMount',
 			value: function componentWillMount() {
 				var accountId = (0, _Helpers.getUrlParameters)()['id'];
-				(0, _DataHandler.getAccount)(this, 'accountId');
+				(0, _DataHandler.getAccount)(this, accountId);
 			}
 		}, {
 			key: 'render',
@@ -113,7 +117,8 @@
 						'h4',
 						null,
 						'Account Details'
-					)
+					),
+					'Id' in this.state.Account ? _react2.default.createElement(_AccountForm2.default, { Account: this.state.Account }) : null
 				);
 			}
 		}]);
@@ -21585,7 +21590,7 @@
 
 
 	// module
-	exports.push([module.id, "div.error-message {\n\tborder: red;\n\tborder-style: double;\n}", ""]);
+	exports.push([module.id, "div.error-message {\n\tborder: red;\n\tborder-style: double;\n}\n\ninput {\n\tmargin-left: 20px;\n\tmargin-bottom: 10px;\n\twidth: 400px;\n}", ""]);
 
 	// exports
 
@@ -22012,6 +22017,100 @@
 	}(_react2.default.Component);
 
 	exports.default = ErrorMessage;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AccountForm = function (_React$Component) {
+		_inherits(AccountForm, _React$Component);
+
+		function AccountForm() {
+			_classCallCheck(this, AccountForm);
+
+			return _possibleConstructorReturn(this, (AccountForm.__proto__ || Object.getPrototypeOf(AccountForm)).call(this));
+		}
+
+		_createClass(AccountForm, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"form",
+						null,
+						_react2.default.createElement(
+							"label",
+							{ htmlFor: "Name" },
+							"Name"
+						),
+						_react2.default.createElement("input", { id: "Name", type: "text", value: this.props.Account.Name }),
+						_react2.default.createElement("br", null),
+						_react2.default.createElement(
+							"label",
+							{ htmlFor: "BillingStreet" },
+							"Street"
+						),
+						_react2.default.createElement("input", { id: "BillingStreet", type: "text", value: this.props.Account.BillingStreet }),
+						_react2.default.createElement("br", null),
+						_react2.default.createElement(
+							"label",
+							{ htmlFor: "BillingCity" },
+							"City"
+						),
+						_react2.default.createElement("input", { id: "BillingCity", type: "text", value: this.props.Account.BillingCity }),
+						_react2.default.createElement("br", null),
+						_react2.default.createElement(
+							"label",
+							{ htmlFor: "BillingState" },
+							"State"
+						),
+						_react2.default.createElement("input", { id: "BillingState", type: "text", value: this.props.Account.BillingState }),
+						_react2.default.createElement("br", null),
+						_react2.default.createElement(
+							"label",
+							{ htmlFor: "BillingPostalCode" },
+							"Postal Code"
+						),
+						_react2.default.createElement("input", { id: "BillingPostalCode", type: "text", value: this.props.Account.BillingPostalCode }),
+						_react2.default.createElement("br", null),
+						_react2.default.createElement(
+							"label",
+							{ htmlFor: "BillingCountry" },
+							"Country"
+						),
+						_react2.default.createElement("input", { id: "BillingCountry", type: "text", value: this.props.Account.BillingCountry }),
+						_react2.default.createElement("br", null)
+					)
+				);
+			}
+		}]);
+
+		return AccountForm;
+	}(_react2.default.Component);
+
+	exports.default = AccountForm;
 
 /***/ }
 /******/ ]);
