@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import '../css/App.css';
 import { getUrlParameters } from './Helpers';
 import { getAccount } from './DataHandler';
+import ErrorMessage from './ErrorMessage';
 
 class App extends React.Component {
 	constructor() {
@@ -22,7 +23,13 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				<h4>Errors</h4>
-				<p>test test</p>
+				{
+					this.state.Errors.length > 0 ? 
+					this.state.Errors.map(item => 
+						<ErrorMessage key={item} type={item.type} message={item.message} />
+					) : null
+				}
+				<h4>Account Details</h4>
 			</div>
 		);
 	}
